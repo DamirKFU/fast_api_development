@@ -1,0 +1,6 @@
+[flake8]
+application_import_names = app
+import-order-style = google
+inline-quotes = double
+max-expression-complexity=8
+exclude = .venv,venv,*/migrations/*,.git,__pycache__,*/alembic/*

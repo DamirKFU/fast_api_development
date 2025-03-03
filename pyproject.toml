@@ -1,0 +1,13 @@
+[tool.black]
+line-length = 79
+extend-exclude = '''
+/(
+|  migrations
+|  venv
+|  alembic
+)/
+'''
+
+[tool.mypy]
+strict = true
+exclude = ["venv", ".venv", "alembic"]
