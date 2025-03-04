@@ -3,6 +3,7 @@ import logging
 import sqlalchemy
 import sqlmodel
 import tenacity
+import uvicorn
 
 import app.core.config
 import app.core.db
@@ -33,6 +34,12 @@ def main() -> None:
     logger.info("Initializing service")
     init(app.core.db.engine)
     logger.info("Service finished initializing")
+    uvicorn.run(
+        "server:asgi_app",
+        host=app.core.config.settings.HOST,
+        port=app.core.config.settings.PORT,
+        reload=True,
+    )
 
 
 if __name__ == "__main__":

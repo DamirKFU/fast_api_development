@@ -1,12 +1,45 @@
 from logging.config import fileConfig
+from pathlib import Path
+from importlib import import_module
+from inspect import isclass, getmembers
+import sqlmodel
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from app.core.config import settings  # noqa
 from alembic import context
 
+def import_models_from_api():
+    api_path = Path("./app/api").resolve() 
+    models = []
+
+    for module_dir in api_path.iterdir():
+        if not module_dir.is_dir():
+            continue
+
+        models_file = module_dir / "models.py"
+        if not models_file.exists():
+            continue
+            
+        try:
+            module_path = f"app.api.{module_dir.name}.models"
+            module = import_module(module_path)
+            
+            for _, obj in getmembers(module):
+                if (isclass(obj) and 
+                    issubclass(obj, sqlmodel.SQLModel) and 
+                    obj != sqlmodel.SQLModel):
+                    models.append(obj)
+                    print(f"Найдена модель: {obj.__name__} в {module_path}")
+                    
+        except ImportError as e:
+            print(f"Не удалось импортировать {module_path}: {e}")
+            
+    return models
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+
 config = context.config
 
 # Interpret the config file for Python logging.
@@ -18,9 +51,10 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 from app.core.config import settings  # noqa
-import sqlmodel  # noqa
 
 target_metadata = sqlmodel.SQLModel.metadata
+
+import_models_from_api()
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
