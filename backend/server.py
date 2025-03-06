@@ -12,6 +12,7 @@ asgi_app: fastapi.FastAPI = fastapi.FastAPI(
     title=app.core.config.settings.PROJECT_NAME,
     openapi_url=f"{app.core.config.settings.API_V1_STR}/openapi.json",
     generate_unique_id_function=custom_generate_unique_id,
+    debug=app.core.config.settings.DEBUG,
 )
 
 

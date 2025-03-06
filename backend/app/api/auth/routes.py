@@ -1,8 +1,8 @@
 import fastapi
 
 from app.api.users.models import User
-from app.api.users.schemas.request import RegisterUserRequest
-from app.api.users.schemas.responce import UserResponse
+from backend.app.api.users.schemas.request_shema import RegisterUserRequest
+from backend.app.api.users.schemas.responce_shema import UserResponse
 from app.api.users.utils import get_password_hash
 from app.core.db import SessionDep
 

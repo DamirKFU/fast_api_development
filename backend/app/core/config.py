@@ -30,6 +30,7 @@ class Settings(pydantic_settings.BaseSettings):
     SECRET_KEY: str = secrets.token_urlsafe(32)
     HOST: str = "localhost"
     PORT: int = 8000
+    DEBUG: bool = True
 
     POSTGRES_SERVER: str
     POSTGRES_PORT: int = 5432
