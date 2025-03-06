@@ -3,6 +3,7 @@ import fastapi
 from app.api.users.models import User
 from app.api.users.schemas.request import RegisterUserRequest
 from app.api.users.schemas.responce import UserResponse
+from app.api.users.utils import get_password_hash
 from app.core.db import SessionDep
 
 
@@ -14,7 +15,11 @@ async def register(
     request: RegisterUserRequest,
     session: SessionDep,
 ) -> User:
-    user = User(username=request.username)
+    user = User(
+        email=request.email,
+        username=request.username,
+        hashed_password=get_password_hash(request.password),
+    )
     session.add(user)
     session.commit()
     return user

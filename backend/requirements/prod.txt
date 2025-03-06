@@ -7,3 +7,5 @@ alembic==1.13.2
 psycopg==3.2.5
 psycopg-binary==3.2.2
 tenacity==8.5.0
+passlib==1.7.4
+pydantic[email]

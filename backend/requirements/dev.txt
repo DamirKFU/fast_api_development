@@ -18,3 +18,4 @@ flake8-print==5.0.0
 flake8-quotes==3.3.2
 flake8-return==1.2.0
 flake8-use-pathlib==0.3.0
+types-passlib==1.7.7.20241221
